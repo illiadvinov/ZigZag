@@ -36,8 +36,18 @@ namespace CodeBase.Platforms
                 InstantiatePlatform(i);
         }
 
-        public Vector3 Spawn(int i) =>
-            DefinePosition(platforms[i]);
+        public void Reset()
+        {
+            foreach (GameObject platform in platforms)
+                platform.SetActive(false);
+            previousPlatform = startPlatform;
+        }
+
+        public Vector3 Spawn(int i)
+        {
+            platforms[i].SetActive(true);
+            return DefinePosition(platforms[i]);
+        }
 
         public Vector3 Reuse(GameObject objectToAdd)
         {

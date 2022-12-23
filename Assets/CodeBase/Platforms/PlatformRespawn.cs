@@ -26,6 +26,11 @@ namespace CodeBase.Platforms
             }
         }
 
+        private void OnDisable()
+        {
+            rigidbody.isKinematic = true;
+        }
+
         private IEnumerator DisablePlatform()
         {
             yield return new WaitForSeconds(2);

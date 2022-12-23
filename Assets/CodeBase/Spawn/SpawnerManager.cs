@@ -11,13 +11,16 @@ namespace CodeBase.Spawn
         private readonly PlatformManager platformManager;
         private readonly EventReferer eventReferer;
         private readonly CrystalSpawner crystalManager;
+        private readonly GameObject startPlatform;
 
         [Inject]
-        public SpawnerManager(PlatformManager platformManager, EventReferer eventReferer, CrystalSpawner crystalManager)
+        public SpawnerManager(PlatformManager platformManager, EventReferer eventReferer, CrystalSpawner crystalManager,
+            [Inject(Id = "StartPlatform")] GameObject startPlatform)
         {
             this.platformManager = platformManager;
             this.eventReferer = eventReferer;
             this.crystalManager = crystalManager;
+            this.startPlatform = startPlatform;
         }
 
         public void SubscribeToEvent()
@@ -34,6 +37,7 @@ namespace CodeBase.Spawn
 
         public void Spawn()
         {
+            startPlatform.SetActive(true);
             platformManager.SetPreviousToFirst();
             for (int i = 0; i < 30; i++)
             {
@@ -46,7 +50,9 @@ namespace CodeBase.Spawn
 
         public void Reset()
         {
+            startPlatform.SetActive(false);
             crystalManager.Reset();
+            platformManager.Reset();
         }
 
         private void ReusePlatform(GameObject platform)
